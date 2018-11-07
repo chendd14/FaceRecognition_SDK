@@ -1,5 +1,10 @@
 # FaceRecognition SDK Windows edition, build by **visual studio 2015**
 
+### Third party dependencies
+链接：https://pan.baidu.com/s/1oFBCxF6lvHddAOTiTtjdSA 提取码：ivno
+### Models
+链接：https://pan.baidu.com/s/1byz9j_7JJW-bnw1N-ou0lw  提取码：7wy7 
+
 ### 1.&nbsp;&nbsp;人脸检测
 ```c++
 namespace vision {
