@@ -49,11 +49,17 @@ public:
     /* 删除对应index的特征 */
     virtual bool Delete(int index) = 0;
 
+	/* 更新对应index的特征 */
+    virtual bool Update(int index, const std::vector<float> &feature) = 0;
+
     /* 获取比对相似度Top N的比对结果 */
     virtual std::vector<VisionFaceCompareResult> GetResult(const std::vector<float> &feature, int top_k = 10) = 0;
 
     /* 获取两张图片之间的相似度 */
     virtual float GetScore(const std::vector<float> &fea1, const std::vector<float> &fea2, bool origin_score = false) = 0;
+
+	/* 获取存储的特征个数 */
+    virtual int Size() = 0;
 
     /* 设置人脸相似度转换参数。当原始人脸相似度等于mean时，新的相似度输出为0.5；var越大，分数变化越缓和 */
     virtual void SetScoreParam(float mean = 0.4, float var = 0.12) = 0;
