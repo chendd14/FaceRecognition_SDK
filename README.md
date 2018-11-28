@@ -1,6 +1,6 @@
 # FaceRecognition SDK Windows edition, build by **visual studio 2015**
 ### SDK授权
-SDK采用软授权，执行TestExamples下的example32.exe，可以获取机器码。调用SetLicenseFile函数，可以设置授权文件的名称。
+SDK采用软授权，执行example32.exe，可以获取机器码。调用SetLicenseFile函数，可以设置授权文件的名称。
 ### Third party dependencies
 链接：https://pan.baidu.com/s/1oFBCxF6lvHddAOTiTtjdSA 提取码：ivno
 ### Models
