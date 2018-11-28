@@ -1,5 +1,5 @@
-#include "VisionFaceDetect/VisionFaceDetect.h"
-#include "VisionFaceQuality/VisionFaceQuality.h"
+#include "VisionFaceDetect.h"
+#include "VisionFaceQuality.h"
 
 #ifdef _DEBUG
 #pragma comment(lib, "VisionFaceCPUd.lib")
@@ -53,6 +53,7 @@ void CameraTest()
 
 int main(int argc, char** argv)
 {
+	vision::SetLicenseFile("d:/dip/license.lic");
 	CameraTest();
 	return 0;
 }

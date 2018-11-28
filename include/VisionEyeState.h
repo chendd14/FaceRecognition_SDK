@@ -22,23 +22,37 @@
 #endif
 
 namespace vision {
-class VISION_API VisionEyeState {
+class VisionEyeState {
 public:
-    /* 默认析构函数 */
-    virtual ~VisionEyeState() {
+    /**
+     * @brief Init 参数初始化
+     * @param param_path 参数文件路径，推荐使用相对路径，将参数文件放在models文件夹中
+     * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
+     * @return true初始化成功，false初始化失败
+     */
+    VISION_API virtual bool Init(std::string param_path = "models/eye_state.json", int device_id = 0) = 0;
+
+    /**
+     * @brief GetEyeState 获取眼睛闭合的概率
+     * @param img 输入图像
+     * @param key_pts 人脸关键点
+     * @return  左眼和右眼闭合的概率
+     */
+    VISION_API virtual std::vector<float> GetEyeState(const cv::Mat &img, const std::vector<cv::Point2f> &key_pts) = 0;
     }
-
-    /* 初始化，输入参数文件param_path和所要使用的GPU编号device_id */
-    virtual bool Init(std::string param_path = "models/eye_state.json", int device_id = 0) = 0;
-
-    /* 输入一张图像img和人脸关键点key_pts，输出左眼和右眼闭合的概率 */
-    virtual std::vector<float> GetEyeState(const cv::Mat &img, const std::vector<cv::Point2f> &key_pts) = 0;
 };
 
-/* 构造对象，新增变量device_id，默认使用GPU 0 */
+/**
+ * @brief instantiateVisionEyeState 构造对象
+ * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
+ * @return 对象指针
+ */
 VISION_API VisionEyeState *instantiateVisionEyeState(int device_id = 0);
 
-/* 销毁对象 */
+/**
+ * @brief destroyVisionEyeState 销毁对象
+ * @param ptr 对象指针
+ */
 VISION_API void destroyVisionEyeState(VisionEyeState *ptr);
 } // namespace vision
 #endif // VISION_EYE_STATE_H

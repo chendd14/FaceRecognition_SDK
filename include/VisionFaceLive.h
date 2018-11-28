@@ -22,37 +22,47 @@
 #endif
 
 namespace vision {
-enum LIVE_STATE_CODE { LIVE_STATE_LIVE_SUCCEED, LIVE_STATE_FACE_TOO_SMALL, LIVE_STATE_NOT_DIRECTLY_FACING_THE_CAMERA, LIVE_STATE_LOW_COLOR_SATURATION, LIVE_STATE_LIVE_FAILED };
-
-class VISION_API VisionFaceLive {
-public:
-    /* 默认析构函数 */
-    virtual ~VisionFaceLive() {
-    }
-
-    /* 初始化，输入参数文件param_path和所要使用的GPU编号device_id */
-    virtual bool Init(std::string param_path = "models/face_live.json", int device_id = 0) = 0;
-
-    /* 输入一张图像img和人脸关键点，判断是否是活体 */
-    virtual int GetLiveState(const cv::Mat &rgb_img, const cv::Mat &nir_img, const cv::Rect &face_rect, const std::vector<cv::Point2f> &key_pts) = 0;
-
-    /* 活体判断最小脸阈值，小于该阈值直接判定为假体 */
-    virtual void SetFaceSizeThd(int min_face_size = 100) = 0;
-
-    /* 人头姿态阈值，超过该阈值直接判定为假体 */
-    virtual void SetHeadPoseThd(float head_pose_thd = 15.0f) = 0;
-
-    /* 肤色颜色饱和度阈值，小于该阈值直接判定为假体 */
-    virtual void SetSaturationThd(float saturation_thd = 6.5f) = 0;
-
-    /* 高级特征分析，小于该阈值直接判定为假体 */
-    virtual void SetHighLevelThd(float high_level_thd = 0.85f) = 0;
+enum LIVE_STATE_CODE {
+    LIVE_STATE_LIVE_SUCCEED,                   // 活体检测成功
+    LIVE_STATE_FACE_TOO_SMALL,                 // 人脸太小，请靠近摄像头
+    LIVE_STATE_NOT_DIRECTLY_FACING_THE_CAMERA, // 人脸角度太大，没有正对摄像头，请直视摄像头
+    LIVE_STATE_LOW_COLOR_SATURATION,           // 人脸区域色彩饱和度太低
+    LIVE_STATE_LIVE_FAILED                     // 活体检测失败
 };
 
-/* 构造对象，新增变量device_id，默认使用GPU 0 */
+class VisionFaceLive {
+public:
+    /**
+     * @brief Init 参数初始化
+     * @param param_path 参数文件路径，推荐使用相对路径，将参数文件放在models文件夹中
+     * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
+     * @return true初始化成功，false初始化失败
+     */
+    VISION_API virtual bool Init(std::string param_path = "models/face_live.json", int device_id = 0) = 0;
+
+    /**
+     * @brief GetLiveState 获取活体状态
+     * @param rgb_img RGB图像（BGR format）
+     * @param nir_img 红外图像（BGR format）
+     * @param face_rect 红外图像人脸框所在的位置
+     * @param key_pts 红外图像人脸关键点位置
+     * @return 详见LIVE_STATE_CODE的说明
+     */
+    VISION_API virtual LIVE_STATE_CODE
+    GetLiveState(const cv::Mat &rgb_img, const cv::Mat &nir_img, const cv::Rect &face_rect, const std::vector<cv::Point2f> &key_pts) = 0;
+};
+
+/**
+ * @brief instantiateVisionFaceLive 构造对象
+ * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
+ * @return 对象指针
+ */
 VISION_API VisionFaceLive *instantiateVisionFaceLive(int device_id = 0);
 
-/* 销毁对象 */
+/**
+ * @brief destroyVisionFaceLive 销毁对象
+ * @param ptr 对象指针
+ */
 VISION_API void destroyVisionFaceLive(VisionFaceLive *ptr);
 } // namespace vision
 #endif // VISION_FACE_LIVE_H

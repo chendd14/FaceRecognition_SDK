@@ -22,47 +22,61 @@
 #endif
 
 namespace vision {
-class VISION_API VisionFaceAlignment {
+class VisionFaceAlignment {
 public:
-    /* 默认析构函数 */
-    virtual ~VisionFaceAlignment() {
-    }
+    /**
+     * @brief Init 参数初始化
+     * @param param_path 参数文件路径，推荐使用相对路径，将参数文件放在models文件夹中
+     * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
+     * @return true初始化成功，false初始化失败
+     */
+    VISION_API virtual bool Init(std::string param_path = "models/face_align.json", int device_id = 0) = 0;
 
-    /* 初始化，输入参数文件param_path和所要使用的GPU编号device_id */
-    virtual bool Init(std::string param_path = "models/face_align.json", int device_id = 0) = 0;
+    /**
+     * @brief GetKeyPoints 获取人脸关键点信息
+     * @param img 输入图像（in BGR format）
+     * @param face_rect 人脸检测模块获取的人脸框
+     * @return 人脸关键点
+     */
+    VISION_API virtual std::vector<cv::Point2f> GetKeyPoints(const cv::Mat &img, const cv::Rect &face_rect) = 0;
 
-    /* 输入一张图像img和人脸框face_rect，输出人脸的关键点位置 */
-    virtual std::vector<cv::Point2f> GetKeyPoints(const cv::Mat &img, const cv::Rect &face_rect) = 0;
+    /**
+     * @brief GetAlignedFace 获取归一化人脸图像
+     * @param img 输入图像（in BGR format）
+     * @param face_rect 人脸检测模块获取的人脸框
+     * @param padding 缺少的信息是否采用缺失像素周边的像素值进行填充，或者填充0
+     * @return 归一化人脸图像（180x220）
+     */
+    VISION_API virtual cv::Mat GetAlignedFace(const cv::Mat &img, const cv::Rect &face_rect, bool padding = false) = 0;
 
-    /* 批量获取人脸的关键点位置 */
-    virtual std::vector<std::vector<cv::Point2f>> GetKeyPoints(const cv::Mat &img, const std::vector<cv::Rect> &face_rects) = 0;
+    /**
+     * @brief GetAlignedFace 获取归一化人脸图像
+     * @param img 输入图像（in BGR format）
+     * @param key_pts 人脸关键点
+     * @param padding 缺少的信息是否采用缺失像素周边的像素值进行填充，或者填充0
+     * @return 归一化人脸图像（180x220）
+     */
+    VISION_API virtual cv::Mat GetAlignedFace(const cv::Mat &img, const std::vector<cv::Point2f> &key_pts, bool padding = false) = 0;
 
-    /* 输入一张图像img和人脸框face_rect，输出一张归一化人脸（180x220）。若padding是true，则在图像变换的时候采用周边的像素进行补充 */
-    virtual cv::Mat GetAlignedFace(const cv::Mat &img, const cv::Rect &face_rect, bool padding = false) = 0;
-
-    /* 批量获取归一化人脸 */
-    virtual std::vector<cv::Mat> GetAlignedFace(const cv::Mat &img, const std::vector<cv::Rect> &face_rect, bool padding = false) = 0;
-
-    /* 输入一张图像img和人脸关键点key_pts，输出一张归一化人脸 */
-    virtual cv::Mat GetAlignedFace(const cv::Mat &img, const std::vector<cv::Point2f> &key_pts, bool padding = false) = 0;
-
-    /* 批量获取归一化人脸 */
-    virtual std::vector<cv::Mat> GetAlignedFace(const cv::Mat &img, const std::vector<std::vector<cv::Point2f>> &key_pts, bool padding = false) = 0;
-
-    /* 根据人脸关键点，获取人脸姿态，pitch、yaw、roll */
-    virtual std::vector<float> GetHeadPose(const std::vector<cv::Point2f> &key_pts) = 0;
-
-    /* 批量获取人脸姿态 */
-    virtual std::vector<std::vector<float>> GetHeadPose(const std::vector<std::vector<cv::Point2f>> &key_pts) = 0;
-
-    /* 获取归一化人脸，并计算关键点在归一化人脸图像上的位置 */
-    virtual cv::Mat GetAlignedFace(const cv::Mat &img, const std::vector<cv::Point2f> &key_pts, std::vector<cv::Point2f> &key_pts_new, float scale = 1.0f, bool padding = false) = 0;
+    /**
+     * @brief GetHeadPose 获取人脸姿态
+     * @param key_pts 人脸关键点
+     * @return 人脸姿态，pitch、yaw、roll
+     */
+    VISION_API virtual std::vector<float> GetHeadPose(const std::vector<cv::Point2f> &key_pts) = 0;
 };
 
-/* 构造对象，新增变量device_id，默认使用GPU 0 */
+/**
+ * @brief instantiateVisionFaceAlignment 构造对象
+ * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
+ * @return 对象指针
+ */
 VISION_API VisionFaceAlignment *instantiateVisionFaceAlignment(int device_id = 0);
 
-/* 销毁对象 */
+/**
+ * @brief destroyVisionFaceAlignment 销毁对象
+ * @param ptr 对象指针
+ */
 VISION_API void destroyVisionFaceAlignment(VisionFaceAlignment *ptr);
 } // namespace vision
 #endif // VISION_FACE_ALIGNMENT_H

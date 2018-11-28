@@ -21,59 +21,76 @@
 #include "VisionCommon.h"
 
 namespace vision {
-class VISION_API VisionFaceDetect {
+class VisionFaceDetect {
 public:
-    /* 默认析构函数 */
-    virtual ~VisionFaceDetect() {
-    }
+    /**
+     * @brief Init 参数初始化
+     * @param param_path 参数文件路径，推荐使用相对路径，将参数文件放在models文件夹中
+     * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
+     * @return true初始化成功，false初始化失败
+     */
+    VISION_API virtual bool Init(std::string param_path = "models/face_detect.json", int device_id = 0) = 0;
 
-    /* 初始化，输入参数文件param_path和所要使用的GPU编号device_id */
-    virtual bool Init(std::string param_path = "models/face_detect_cascade.json", int device_id = 0) = 0;
+    /**
+     * @brief GetFaces 获取图片中的人脸信息
+     * @param img 输入图片（in BRG format）
+     * @param is_video_stream 是否是连续的video帧。在输入为连续video帧的情况下，将此参数设置为true，能够加速检测过程
+     * @return 返回人脸信息，包括人脸框、关键点和人脸姿态（**注意**：通过此接口获取的VisionFace中其他变量的值无效）
+     */
+    VISION_API virtual std::vector<VisionFace> GetFaces(const cv::Mat &img, bool is_video_stream = false) = 0;
 
-    /* 输入一张图像img，获取人脸信息（包括人脸框和关键点）；在输入视频的情况下，将is_video_stream设置为true，能够极大提升检测速度 */
-    virtual std::vector<VisionFace> GetFaces(const cv::Mat &img, bool is_video_stream = false) = 0;
+    /**
+     * @brief GetFaces 获取图片中的人脸信息
+     * @param img 输入图像（in BGR format）
+     * @param key_pts 人脸关键点信息（引用返回，对应人脸框）
+     * @param is_video_stream 是否是连续的video帧。在输入为连续video帧的情况下，将此参数设置为true，能够加速检测过程
+     * @return 返回人脸框的信息
+     */
+    VISION_API virtual std::vector<cv::Rect>
+    GetFaces(const cv::Mat &img, std::vector<std::vector<cv::Point2f>> &key_pts, bool is_video_stream = false) = 0;
 
-    /* 输入一张图像img，返回所有的人脸框以及对应的人脸关键点（引用形式返回） */
-    virtual std::vector<cv::Rect> GetFaces(const cv::Mat &img, std::vector<std::vector<cv::Point2f>> &key_pts, bool is_video_stream = false) = 0;
+    /**
+     * @brief GetMaximumFace 获取图像中的最大人脸信息
+     * @param img 输入图像（in BGR format）
+     * @param is_video_stream 是否是连续的video帧。在输入为连续video帧的情况下，将此参数设置为true，能够加速检测过程
+     * @return 返回人脸框信息
+     */
+    VISION_API virtual std::vector<VisionFace> GetMaximumFace(const cv::Mat &img, bool is_video_stream = false) = 0;
 
-    /* 获取图像img中最大人脸的人脸框 */
-    virtual std::vector<VisionFace> GetMaximumFace(const cv::Mat &img, bool is_video_stream = false) = 0;
+    /**
+     * @brief GetMaximumFace GetMaximumFace 获取图像中的最大人脸信息
+     * @param img 输入图像（in BGR format）
+     * @param key_pts 人脸关键点信息（引用返回，对应人脸框）
+     * @param is_video_stream 是否是连续的video帧。在输入为连续video帧的情况下，将此参数设置为true，能够加速检测过程
+     * @return 返回人脸框信息
+     */
+    VISION_API virtual std::vector<cv::Rect>
+    GetMaximumFace(const cv::Mat &img, std::vector<std::vector<cv::Point2f>> &key_pts, bool is_video_stream = false) = 0;
 
-    /* 输入一张图像img，图像img中最大人脸的人脸框以及对应的人脸关键点（引用形式返回） */
-    virtual std::vector<cv::Rect> GetMaximumFace(const cv::Mat &img, std::vector<std::vector<cv::Point2f>> &key_pts, bool is_video_stream = false) = 0;
+    /**
+     * @brief SetMinFaceSize 设置最小检测人脸大小，需要根据使用场景确定合理值，以获得最好的人脸检测效果
+     * @param size 人脸大小（像素），值越大检测速度越快
+     */
+    VISION_API virtual void SetMinFaceSize(int size = 40) = 0;
 
-    /* 输入图像img和人脸框face_rect，返回人脸框的置信度和新的人脸框和关键点位置（引用返回）*/
-    virtual float VerifyCalibrate(const cv::Mat &img, cv::Rect &face_rect, std::vector<cv::Point2f> &key_pts) = 0;
-
-    /* 输入图像红外摄像头采集到的图像infr_img和自然光摄像头的人脸检测人脸框位置face_rect，返回是否是活体*/
-    virtual bool LiveDetect(const cv::Mat &rgb_img, const cv::Mat &nir_img, cv::Rect face_rect) = 0;
-
-    /* 批量处理 */
-    virtual std::vector<float> VerifyCalibrate(const cv::Mat &img, std::vector<cv::Rect> &face_rects, std::vector<std::vector<cv::Point2f>> &key_pts) = 0;
-
-    /* 将人脸框face_rect绘制在图像img上 */
-    virtual void DrawFaceRect(cv::Mat &img, cv::Rect face_rect) = 0;
-
-    /* 以下接口为高级接口，一般情况下不需要使用 */
-    virtual void SetRedetectInterval(int interval = 8)                                    = 0;
-    virtual void SetMinFaceSize(int size = 40)                                            = 0;
-    virtual void SetMaxFaceSize(int size = 0)                                             = 0;
-    virtual void SetScaleFactor(float factor = 0.71f)                                     = 0;
-    virtual void SetMaxWidthGlobal(int size = 640)                                        = 0;
-    virtual void SetDetectThd(float thd1 = 0.60f, float thd2 = 0.75f, float thd3 = 0.85f) = 0;
-    virtual void SetStep1NMSThreshold(float thd = 0.50f)                                  = 0;
-    virtual void SetStep2NMSThreshold(float thd = 0.70f)                                  = 0;
-    virtual void SetStep3NMSThreshold(float thd = 0.70f)                                  = 0;
-    virtual void SetBboxes2Squares(bool flag = true)                                      = 0;
-    virtual void SetPreNMSTopN(int pre_top_n = 0)                                         = 0;
-    virtual void SetPostNMSTopN(int post_top_n = 0)                                       = 0;
-    virtual void SetLiveThd(float live_thd = 0.90f)                                       = 0;
+    /**
+     * @brief SetMaxWidthGlobal 设置检测图像最长边大小，大于改值，将对图像进行缩放，然后在小图像上进行人脸检测（不影响人脸检测输出结果）
+     * @param size 最长边大小
+     */
+    VISION_API virtual void SetMaxWidthGlobal(int size = 640) = 0;
 };
 
-/* 构造对象，默认使用GPU 0 */
+/**
+ * @brief instantiateVisionFaceDetect 构造对象
+ * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
+ * @return 对象指针
+ */
 VISION_API VisionFaceDetect *instantiateVisionFaceDetect(int device_id = 0);
 
-/* 销毁对象 */
+/**
+ * @brief destroyVisionFaceDetect 销毁对象
+ * @param ptr 对象指针
+ */
 VISION_API void destroyVisionFaceDetect(VisionFaceDetect *ptr);
 } // namespace vision
 #endif // VISION_FACE_DETECT_H

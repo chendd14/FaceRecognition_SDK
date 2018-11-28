@@ -1,4 +1,4 @@
-#include "VisionFaceTrack/VisionFaceTrack.h"
+#include "VisionFaceTrack.h"
 
 #include <vector>
 #include <fstream>
@@ -18,9 +18,11 @@ std::string ToString(const T& tmp)
 }
 
 int main(int argc, char** argv) {
+	vision::SetLicenseFile("d:/dip/license.lic");
 	vision::VisionFaceTrack* face_track = vision::instantiateVisionFaceTrack();
+	face_track->SetUseRefind(true);
 
-	cv::VideoCapture capture("D:\\GitLab\\VisionFaceProject\\Resources\\test_videos\\track_test_sample_video.mp4");
+	cv::VideoCapture capture(0);
 	cv::Mat img;
 
 	while (true)
@@ -35,13 +37,16 @@ int main(int argc, char** argv) {
 			{
 				cv::rectangle(img, track_results.at(i).bbox, cv::Scalar(255, 0, 0), 2);
 				cv::putText(img, ToString(track_results[i].face_id), cv::Point(track_results[i].bbox.x, track_results[i].bbox.y), 1, 2.8, cv::Scalar(0, 255, 0), 2);
+			}
 
-				//cv::imshow("best", track_results[i].GetBestFace());
+
+			cv::imshow("track result", img);
+			if (cv::waitKey(1) == 27)
+			{
+				break;
 			}
 		}
-
-		cv::imshow("track result", img);
-		if (cv::waitKey(1) == 27)
+		else
 		{
 			break;
 		}
