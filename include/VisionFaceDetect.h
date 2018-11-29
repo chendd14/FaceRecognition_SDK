@@ -91,6 +91,15 @@ public:
      * @param flag true转化成方框，false不进行转化
      */
     VISION_API virtual void SetBboxes2Squares(bool flag = true) = 0;
+
+    /**
+     * @brief LiveDetect 活体检测
+     * @param rgb_img RGB图像
+     * @param nir_img 近红外图像
+     * @param face_rect 红外图像人脸框
+     * @return true是活体，false不是活体
+     */
+    VISION_API virtual bool LiveDetect(const cv::Mat &rgb_img, const cv::Mat &nir_img, cv::Rect face_rect) = 0;
 };
 
 /**
