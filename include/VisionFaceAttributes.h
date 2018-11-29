@@ -20,7 +20,7 @@
 #endif
 
 namespace vision {
-class VisionFaceAttributes {
+class VISION_API VisionFaceAttributes {
 public:
     /**
      * @brief Init 参数初始化（该接口后期将被抛弃）
@@ -28,7 +28,7 @@ public:
      * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
      * @return true初始化成功，false初始化失败
      */
-    VISION_API virtual bool Init(std::string param_path = "models/face_attributes.json", int device_id = 0) = 0;
+    virtual bool Init(std::string param_path = "models/face_attributes.json", int device_id = 0) = 0;
 
     /**
      * @brief InitV3 参数初始化
@@ -36,7 +36,7 @@ public:
      * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
      * @return true初始化成功，false初始化失败
      */
-    VISION_API virtual bool InitV3(std::string param_path = "face_attributes_v3.param", int device_id = 0) = 0;
+    virtual bool InitV3(std::string param_path = "face_attributes_v3.param", int device_id = 0) = 0;
 
     /**
      * @brief GetAttributes 获取人脸属性信息
@@ -53,14 +53,50 @@ public:
      * 8 年龄：具体岁数;
      * 9 是否黑色人种：0.否, 1.是, -1.无法判断
      */
-    VISION_API virtual std::vector<int> GetAttributes(const cv::Mat &img) = 0;
+    virtual std::vector<int> GetAttributes(const cv::Mat &img) = 0;
 
     /**
      * @brief GetAttributesRaw 获取人脸属性原始信息（属性概率值）
      * @param img 输入图像（in BGR format）
      * @return 对应属性的概率值
      */
-    VISION_API virtual std::vector<float> GetAttributesRaw(const cv::Mat &img) = 0;
+    virtual std::vector<float> GetAttributesRaw(const cv::Mat &img) = 0;
+
+    /**
+     * @brief GetAttributes 获取人脸属性和人脸特征
+     * @param img 输入归一化人脸图像（in BGR format）
+     * @param feature 引用返回人脸图像
+     * @return 人脸属性
+     */
+    virtual std::vector<int> GetAttributes(const cv::Mat &img, std::vector<float> &feature) = 0;
+
+    /**
+     * @brief GetAttributes 批量获取人脸属性
+     * @param imgs 输入图片
+     * @return 人脸属性
+     */
+    virtual std::vector<std::vector<int>> GetAttributes(const std::vector<cv::Mat> &imgs) = 0;
+
+    /**
+     * @brief GetAttributesRaw 批量获取人脸属性原始信息（属性概率值）
+     * @param imgs 输入图片
+     * @return 人脸对应属性的概率值
+     */
+    virtual std::vector<std::vector<float>> GetAttributesRaw(const std::vector<cv::Mat> &imgs) = 0;
+
+    /**
+     * @brief GetAttributes 批量获取人脸属性和人脸特征
+     * @param imgs 输入图片
+     * @param features 引用返回人脸特征
+     * @return 人脸属性
+     */
+    virtual std::vector<std::vector<int>> GetAttributes(const std::vector<cv::Mat> &imgs, std::vector<std::vector<float>> &features) = 0;
+
+    /**
+     * @brief ~VisionFaceAttributes 默认析构函数
+     */
+    virtual ~VisionFaceAttributes() {
+    }
 };
 
 /**

@@ -30,7 +30,7 @@ enum LIVE_STATE_CODE {
     LIVE_STATE_LIVE_FAILED                     // 活体检测失败
 };
 
-class VisionFaceLive {
+class VISION_API VisionFaceLive {
 public:
     /**
      * @brief Init 参数初始化
@@ -38,7 +38,7 @@ public:
      * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
      * @return true初始化成功，false初始化失败
      */
-    VISION_API virtual bool Init(std::string param_path = "models/face_live.json", int device_id = 0) = 0;
+    virtual bool Init(std::string param_path = "models/face_live.json", int device_id = 0) = 0;
 
     /**
      * @brief GetLiveState 获取活体状态
@@ -48,8 +48,38 @@ public:
      * @param key_pts 红外图像人脸关键点位置
      * @return 详见LIVE_STATE_CODE的说明
      */
-    VISION_API virtual LIVE_STATE_CODE
+    virtual LIVE_STATE_CODE
     GetLiveState(const cv::Mat &rgb_img, const cv::Mat &nir_img, const cv::Rect &face_rect, const std::vector<cv::Point2f> &key_pts) = 0;
+
+    /**
+     * @brief SetFaceSizeThd 设置活体最小人脸阈值，小于该阈值将被判为假体
+     * @param min_face_size 最小人脸阈值
+     */
+    virtual void SetFaceSizeThd(int min_face_size = 100) = 0;
+
+    /**
+     * @brief SetHeadPoseThd 设置头部姿态阈值，超过该阈值将被判为假体
+     * @param head_pose_thd 头部姿态阈值
+     */
+    virtual void SetHeadPoseThd(float head_pose_thd = 20.0f) = 0;
+
+    /**
+     * @brief SetSaturationThd 设置人脸饱和度阈值，小于该阈值将被判定为假体
+     * @param saturation_thd 人脸饱和度阈值
+     */
+    virtual void SetSaturationThd(float saturation_thd = 6.5f) = 0;
+
+    /**
+     * @brief SetHighLevelThd 设置人脸活体深度学习分类器阈值
+     * @param high_level_thd 深度学习分类器阈值
+     */
+    virtual void SetHighLevelThd(float high_level_thd = 0.85f) = 0;
+
+    /**
+     * @brief ~VisionFaceLive 默认析构函数
+     */
+    virtual ~VisionFaceLive() {
+    }
 };
 
 /**

@@ -28,25 +28,25 @@ enum CameraResolution { W640_H480 = 0, W800_H600 = 1, W1024_H768 = 2, W1920_H108
 // 图像旋转类型
 enum ImageRotateType { NO_ROTATE = 0, CLOCK_WISE_90 = 1, CLOCK_WISE_180 = 2, CLOCK_WISE_270 = 3 };
 
-class VisionFaceLiveCapture {
+class VISION_API VisionFaceLiveCapture {
 public:
     /**
      * @brief OpenCamera 打开摄像头
      * @param type 图像分辨率类型
      * @return true打开成功，false打开失败
      */
-    VISION_API virtual bool OpenCamera(CameraResolution type = W640_H480) = 0;
+    virtual bool OpenCamera(CameraResolution type = W640_H480) = 0;
 
     /**
      * @brief CloseCamera 关闭摄像头
      */
-    VISION_API virtual void CloseCamera() = 0;
+    virtual void CloseCamera() = 0;
 
     /**
      * @brief CheckCameraConnectStatus 检查摄像头是否连接并被识别
      * @return true连接正常，false连接异常
      */
-    VISION_API virtual bool CheckCameraConnectStatus() = 0;
+    virtual bool CheckCameraConnectStatus() = 0;
 
     /**
      * @brief GetImgInfo 获取图像信息
@@ -55,21 +55,21 @@ public:
      * @param img_channels 图像channels
      * @return
      */
-    VISION_API virtual bool GetImgInfo(int &img_width, int &img_height, int &img_channels) = 0;
+    virtual bool GetImgInfo(int &img_width, int &img_height, int &img_channels) = 0;
 
     /**
      * @brief operator >> 获取一帧图像
      * @param image 引用返回图像
      * @return
      */
-    VISION_API virtual VisionFaceLiveCapture &operator>>(cv::Mat &image) = 0;
+    virtual VisionFaceLiveCapture &operator>>(cv::Mat &image) = 0;
 
     /**
      * @brief GetMaximumFace 获取最大人脸
      * @param img 引用返回Camera图像
      * @return 人脸信息，包含活体信息
      */
-    VISION_API virtual std::vector<VisionFace> GetMaximumFace(cv::Mat &img) = 0;
+    virtual std::vector<VisionFace> GetMaximumFace(cv::Mat &img) = 0;
 
     /**
      * @brief Processing 获取图像和人脸信息
@@ -81,47 +81,37 @@ public:
      * @param y2 人脸框右下角y
      * @return
      */
-    VISION_API virtual bool Processing(uchar *img_data, int &living_status, int &x1, int &y1, int &x2, int &y2) = 0;
+    virtual bool Processing(uchar *img_data, int &living_status, int &x1, int &y1, int &x2, int &y2) = 0;
 
     /**
      * @brief SetImageRotateType 设置图像旋转
      * @param type 图像旋转类型
      */
-    VISION_API virtual void SetImageRotateType(ImageRotateType type) = 0;
+    virtual void SetImageRotateType(ImageRotateType type) = 0;
 
     /**
      * @brief SetResolution 设置图像采集分辨率
      * @param type 分辨率类型
      */
-    VISION_API virtual void SetResolution(CameraResolution type) = 0;
+    virtual void SetResolution(CameraResolution type) = 0;
 
     /**
      * @brief SetMinFaceSize 设置最小的人脸大小
      * @param value 最小人脸值
      */
-    VISION_API virtual void SetMinFaceSize(int value = 140) = 0;
+    virtual void SetMinFaceSize(int value = 140) = 0;
 
     /**
      * @brief SetLiveThd 设置活体置信度
      * @param live_thd 活体置信度
      */
-    VISION_API virtual void SetLiveThd(float live_thd = 0.85f) = 0;
+    virtual void SetLiveThd(float live_thd = 0.85f) = 0;
 
     /**
      * @brief CaptureIRImage 获取一帧红外图像
      * @return 红外图像
      */
     virtual bool CaptureIRImage() = 0;
-
-    /**
-     * @brief LiveDetect 活体判断
-     * @param x 人脸框x
-     * @param y 人脸框y
-     * @param w 人脸框width
-     * @param h 人脸框height
-     * @return
-     */
-    virtual bool LiveDetect(int x, int y, int w, int h) = 0;
 
     /**
      * @brief PreviewCloseIRCamera 设置在预览的时候，是否关闭红外摄像头

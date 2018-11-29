@@ -22,7 +22,7 @@
 #endif
 
 namespace vision {
-class VisionEyeState {
+class VISION_API VisionEyeState {
 public:
     /**
      * @brief Init 参数初始化
@@ -30,7 +30,7 @@ public:
      * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
      * @return true初始化成功，false初始化失败
      */
-    VISION_API virtual bool Init(std::string param_path = "models/eye_state.json", int device_id = 0) = 0;
+    virtual bool Init(std::string param_path = "models/eye_state.json", int device_id = 0) = 0;
 
     /**
      * @brief GetEyeState 获取眼睛闭合的概率
@@ -38,7 +38,12 @@ public:
      * @param key_pts 人脸关键点
      * @return  左眼和右眼闭合的概率
      */
-    VISION_API virtual std::vector<float> GetEyeState(const cv::Mat &img, const std::vector<cv::Point2f> &key_pts) = 0;
+    virtual std::vector<float> GetEyeState(const cv::Mat &img, const std::vector<cv::Point2f> &key_pts) = 0;
+
+    /**
+     * @brief ~VisionEyeState 默认析构函数
+     */
+    virtual ~VisionEyeState() {
     }
 };
 

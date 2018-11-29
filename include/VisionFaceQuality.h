@@ -20,7 +20,7 @@
 #endif
 
 namespace vision {
-class VisionFaceQuality {
+class VISION_API VisionFaceQuality {
 public:
     /**
      * @brief Init 参数初始化
@@ -28,7 +28,7 @@ public:
      * @param device_id 需要使用的GPU编号（仅在GPU模式下有效）
      * @return true初始化成功，false初始化失败
      */
-    VISION_API virtual bool Init(std::string param_path = "models/face_quality.json", int device_id = 0) = 0;
+    virtual bool Init(std::string param_path = "models/face_quality.json", int device_id = 0) = 0;
 
     /**
      * @brief GetFaceQuality 获取人脸质量评分
@@ -36,7 +36,7 @@ public:
      * @param face 输入图像中的人脸信息
      * @return 人脸质量评分
      */
-    VISION_API virtual float GetFaceQuality(const cv::Mat &img, VisionFace face) = 0;
+    virtual float GetFaceQuality(const cv::Mat &img, VisionFace face) = 0;
 
     /**
      * @brief GetFaceQuality 获取人脸质量评分
@@ -45,7 +45,31 @@ public:
      * @param key_pts 人脸关键点
      * @return 人脸质量评分
      */
-    VISION_API virtual float GetFaceQuality(const cv::Mat &img, const cv::Rect face_rect, const std::vector<cv::Point2f> &key_pts) = 0;
+    virtual float GetFaceQuality(const cv::Mat &img, const cv::Rect face_rect, const std::vector<cv::Point2f> &key_pts) = 0;
+
+    /**
+     * @brief GetFaceQuality 批量获取人脸质量评分
+     * @param img 输入图像（in BGR format）
+     * @param faces
+     * @return 人脸质量评分
+     */
+    virtual std::vector<float> GetFaceQuality(const cv::Mat &img, const std::vector<VisionFace> &faces) = 0;
+
+    /**
+     * @brief GetFaceQuality 批量获取人脸质量评分
+     * @param img 输入图像（in BGR format）
+     * @param face_rects 人脸框
+     * @param key_pts 人脸关键点
+     * @return 人脸质量评分
+     */
+    virtual std::vector<float>
+    GetFaceQuality(const cv::Mat &img, const std::vector<cv::Rect> face_rects, const std::vector<std::vector<cv::Point2f>> &key_pts) = 0;
+
+    /**
+     * @brief ~VisionFaceQuality 默认析构函数
+     */
+    virtual ~VisionFaceQuality() {
+    }
 };
 
 /**

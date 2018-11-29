@@ -59,6 +59,26 @@ public:
      * @return 人脸相似度
      */
     VISION_API virtual float GetScore(const std::vector<float> &fea1, const std::vector<float> &fea2, bool origin_score = false) = 0;
+
+    /**
+     * @brief SetScoreParam 设置人脸相似度转换参数
+     * @param mean 高斯分布的均值
+     * @param var 高斯分布的方差
+     */
+    virtual void SetScoreParam(float mean = 0.4, float var = 0.12) = 0;
+
+    /**
+     * @brief GetFeature 批量获取归一化人脸图像特征
+     * @param imgs 输入归一化人脸图像
+     * @return 人脸特征
+     */
+    virtual std::vector<std::vector<float>> GetFeature(const std::vector<cv::Mat> &imgs) = 0;
+
+    /**
+     * @brief ~VisionFaceFeature 默认析构函数
+     */
+    virtual ~VisionFaceFeature() {
+    }
 };
 
 /**
