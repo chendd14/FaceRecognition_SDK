@@ -78,6 +78,19 @@ public:
      * @param size 最长边大小
      */
     VISION_API virtual void SetMaxWidthGlobal(int size = 640) = 0;
+
+	/**
+     * @brief DrawFaceRect 绘制人脸框
+     * @param img 需要绘制人脸框的图像
+     * @param face_rect 人脸框
+     */
+    VISION_API virtual void DrawFaceRect(cv::Mat &img, cv::Rect face_rect) = 0;
+
+    /**
+     * @brief SetBboxes2Squares 设置是否将输出人脸框转化成方框
+     * @param flag true转化成方框，false不进行转化
+     */
+    VISION_API virtual void SetBboxes2Squares(bool flag = true) = 0;
 };
 
 /**

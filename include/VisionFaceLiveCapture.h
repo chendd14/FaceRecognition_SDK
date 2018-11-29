@@ -106,6 +106,46 @@ public:
      * @param live_thd 活体置信度
      */
     VISION_API virtual void SetLiveThd(float live_thd = 0.85f) = 0;
+
+    /**
+     * @brief CaptureIRImage 获取一帧红外图像
+     * @return 红外图像
+     */
+    virtual bool CaptureIRImage() = 0;
+
+    /**
+     * @brief LiveDetect 活体判断
+     * @param x 人脸框x
+     * @param y 人脸框y
+     * @param w 人脸框width
+     * @param h 人脸框height
+     * @return
+     */
+    virtual bool LiveDetect(int x, int y, int w, int h) = 0;
+
+    /**
+     * @brief PreviewCloseIRCamera 设置在预览的时候，是否关闭红外摄像头
+     * @param flag 在预览的时候，是否关闭红外摄像头
+     */
+    virtual void PreviewCloseIRCamera(bool flag = false) = 0;
+
+    /**
+     * @brief SetOpenRGBCameraInternal 设置是否在SDK内部打开RGB摄像头
+     * @param flag 是否在SDK内部打开RGB摄像头
+     */
+    virtual void SetOpenRGBCameraInternal(bool flag = true) = 0;
+
+    /**
+     * @brief TaskSnapshot 预览拍照
+     * @param img_name 存储文件名
+     */
+    virtual void TaskSnapshot(std::string img_name) = 0;
+
+    /**
+     * @brief ~VisionFaceLiveCapture 默认析构函数
+     */
+    virtual ~VisionFaceLiveCapture() {
+    }
 };
 
 /**
