@@ -7,7 +7,7 @@
 #endif // _DEBUG
 
 void CameraTest() {
-    vision::VisionFaceDetect *face_detect = vision::instantiateVisionFaceDetect(); // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊı£¬ÎŞĞèÔÙ´Î³õÊ¼»¯
+    vision::VisionFaceDetect *face_detect = vision::instantiateVisionFaceDetect(); // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
     // face_detect->SetMaxWidthGlobal(1080);
 
     cv::VideoCapture cap(0);
@@ -18,7 +18,7 @@ void CameraTest() {
             if (!frame.empty()) {
                 // Perform Face Detect First
                 double                          start = (double)cvGetTickCount();
-                std::vector<vision::VisionFace> faces = face_detect->GetFaces(frame); // ×¢Òâ£¬´ËÊ±VisionFace¶ÔÏóÖĞ³ıÁË¼ì²â¿òºÍÈËÁ³¹Ø¼üµã£¬ÆäËûÁ¿¶¼ÊÇÎŞĞ§µÄ
+                std::vector<vision::VisionFace> faces = face_detect->GetFaces(frame); // æ³¨æ„ï¼Œæ­¤æ—¶VisionFaceå¯¹è±¡ä¸­é™¤äº†æ£€æµ‹æ¡†å’Œäººè„¸å…³é”®ç‚¹ï¼Œå…¶ä»–é‡éƒ½æ˜¯æ— æ•ˆçš„
                 double                          stop  = (double)cvGetTickCount();
                 double                          time  = (stop - start) / (cvGetTickFrequency() * 1000);
                 std::cout << "time cost: " << time << " ms." << std::endl;

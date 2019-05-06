@@ -40,8 +40,8 @@ void putTextZH(Mat &dst, const char* str, Point org, Scalar color, int fontSize,
 	lf.lfEscapement = 0;
 	lf.lfOrientation = 0;
 	lf.lfWeight = 5;
-	lf.lfItalic = italic;   //Ğ±Ìå
-	lf.lfUnderline = underline; //ÏÂ»®Ïß
+	lf.lfItalic = italic;   //æ–œä½“
+	lf.lfUnderline = underline; //ä¸‹åˆ’çº¿
 	lf.lfStrikeOut = 0;
 	lf.lfCharSet = DEFAULT_CHARSET;
 	lf.lfOutPrecision = 0;
@@ -58,8 +58,8 @@ void putTextZH(Mat &dst, const char* str, Point org, Scalar color, int fontSize,
 	int singleRow = 0;
 	char buf[1 << 12];
 	strcpy_s(buf, str);
-	char *bufT[1 << 12];  // Õâ¸öÓÃÓÚ·Ö¸ô×Ö·û´®ºóÊ£ÓàµÄ×Ö·û£¬¿ÉÄÜ»á³¬³ö¡£
-						  //´¦Àí¶àĞĞ
+	char *bufT[1 << 12];  // è¿™ä¸ªç”¨äºåˆ†éš”å­—ç¬¦ä¸²åå‰©ä½™çš„å­—ç¬¦ï¼Œå¯èƒ½ä¼šè¶…å‡ºã€‚
+						  //å¤„ç†å¤šè¡Œ
 	{
 		int nnh = 0;
 		int cw, ch;
@@ -159,60 +159,60 @@ void PutAttributesText(cv::Mat& img, string id, cv::Rect face_rect, cv::Point po
 {
 	int att_num = 0;
 
-	if (gender != "Î´Öª")
+	if (gender != "æœªçŸ¥")
 	{
 		att_num++;
 	}
 
-	if (age_group != "Î´Öª")
+	if (age_group != "æœªçŸ¥")
 	{
 		att_num++;
 	}
 
-	if (glasses != "Î´Öª")
+	if (glasses != "æœªçŸ¥")
 	{
 		att_num++;
 	}
 
-	if (race != "Î´Öª")
+	if (race != "æœªçŸ¥")
 	{
 		att_num++;
 	}
 
-	if (attractive != "Î´Öª")
+	if (attractive != "æœªçŸ¥")
 	{
 		att_num++;
 	}
 
-	if (expression != "Î´Öª")
+	if (expression != "æœªçŸ¥")
 	{
 		att_num++;
 	}
 
-	if (smile != "Î´Öª")
+	if (smile != "æœªçŸ¥")
 	{
 		att_num++;
 	}
 
-	if (mask != "Î´Öª")
+	if (mask != "æœªçŸ¥")
 	{
 		att_num++;
 	}
 
-	if (age != "Î´Öª")
+	if (age != "æœªçŸ¥")
 	{
 		att_num++;
 	}
 
 	cv::Point ori_point = point;
-	/*if (gender == "Î´Öª")
+	/*if (gender == "æœªçŸ¥")
 	{
 	return;
 	}*/
 
 	int font_size = 14;
 
-	putTextZH(img, id.c_str(), point - cv::Point(0, font_size + 6), cv::Scalar(0, 0, 255), font_size + 2, "Î¢ÈíÑÅºÚ");
+	putTextZH(img, id.c_str(), point - cv::Point(0, font_size + 6), cv::Scalar(0, 0, 255), font_size + 2, "å¾®è½¯é›…é»‘");
 
 	point += Point(face_width + 1, 0);
 
@@ -246,47 +246,47 @@ void PutAttributesText(cv::Mat& img, string id, cv::Rect face_rect, cv::Point po
 		int tmp_idx = 0;
 		point += Point(0, 4);
 
-		if (gender != "Î´Öª")
+		if (gender != "æœªçŸ¥")
 		{
 			putTextZH(img, gender.c_str(), point + cv::Point(0, (font_size + 2) * (tmp_idx++)), font_color, font_size, font.c_str());
 		}
 
-		if (age_group != "Î´Öª")
+		if (age_group != "æœªçŸ¥")
 		{
 			putTextZH(img, age_group.c_str(), point + cv::Point(0, (font_size + 2) * (tmp_idx++)), font_color, font_size, font.c_str());
 		}
 
-		if (glasses != "Î´Öª")
+		if (glasses != "æœªçŸ¥")
 		{
 			putTextZH(img, glasses.c_str(), point + cv::Point(0, (font_size + 2) * (tmp_idx++)), font_color, font_size, font.c_str());
 		}
 
-		if (race != "Î´Öª")
+		if (race != "æœªçŸ¥")
 		{
 			putTextZH(img, race.c_str(), point + cv::Point(0, (font_size + 2) * (tmp_idx++)), font_color, font_size, font.c_str());
 		}
 
-		if (attractive != "Î´Öª")
+		if (attractive != "æœªçŸ¥")
 		{
 			putTextZH(img, attractive.c_str(), point + cv::Point(0, (font_size + 2) * (tmp_idx++)), font_color, font_size, font.c_str());
 		}
 
-		if (expression != "Î´Öª")
+		if (expression != "æœªçŸ¥")
 		{
 			putTextZH(img, expression.c_str(), point + cv::Point(0, (font_size + 2) * (tmp_idx++)), font_color, font_size, font.c_str());
 		}
 
-		if (smile != "Î´Öª")
+		if (smile != "æœªçŸ¥")
 		{
 			putTextZH(img, smile.c_str(), point + cv::Point(0, (font_size + 2) * (tmp_idx++)), font_color, font_size, font.c_str());
 		}
 
-		if (mask != "Î´Öª")
+		if (mask != "æœªçŸ¥")
 		{
 			putTextZH(img, mask.c_str(), point + cv::Point(0, (font_size + 2) * (tmp_idx++)), font_color, font_size, font.c_str());
 		}
 
-		if (age != "Î´Öª")
+		if (age != "æœªçŸ¥")
 		{
 			putTextZH(img, age.c_str(), point + cv::Point(0, (font_size + 2) * (tmp_idx++)), font_color, font_size, font.c_str());
 		}
@@ -327,97 +327,97 @@ void DrawAttributesResult(cv::Mat& img, int id, vision::VisionFace& vision_face)
 {
 	string gender;
 	if (vision_face.gender == 0)
-		gender = "Å®";
+		gender = "å¥³";
 	else if (vision_face.gender == 1)
-		gender = "ÄĞ";
+		gender = "ç”·";
 	else if (vision_face.gender == 2)
-		gender = "ÖĞĞÔ";
+		gender = "ä¸­æ€§";
 	else
-		gender = "Î´Öª";
+		gender = "æœªçŸ¥";
 
 	string age_group;
 	if (vision_face.age_group == 0)
-		age_group = "¶ùÍ¯";
+		age_group = "å„¿ç«¥";
 	else if (vision_face.age_group == 1)
-		age_group = "ÉÙÄê";
+		age_group = "å°‘å¹´";
 	else if (vision_face.age_group == 2)
-		age_group = "ÇàÄê";
+		age_group = "é’å¹´";
 	else if (vision_face.age_group == 3)
-		age_group = "ÖĞÇàÄê";
+		age_group = "ä¸­é’å¹´";
 	else if (vision_face.age_group == 4)
-		age_group = "ÖĞÄê";
+		age_group = "ä¸­å¹´";
 	else if (vision_face.age_group == 5)
-		age_group = "ÖĞÀÏÄê";
+		age_group = "ä¸­è€å¹´";
 	else if (vision_face.age_group == 6)
-		age_group = "ÀÏÄê";
+		age_group = "è€å¹´";
 	else
-		age_group = "Î´Öª";
+		age_group = "æœªçŸ¥";
 
 	string glasses;
 	if (vision_face.glasses == 0)
-		glasses = "ÎŞÑÛ¾µ";
+		glasses = "æ— çœ¼é•œ";
 	else if (vision_face.glasses == 1)
-		glasses = "´÷ÑÛ¾µ";
+		glasses = "æˆ´çœ¼é•œ";
 	else if (vision_face.glasses == 2)
-		glasses = "´÷Ä«¾µ";
+		glasses = "æˆ´å¢¨é•œ";
 	else
-		glasses = "Î´Öª";
+		glasses = "æœªçŸ¥";
 
 	string race;
 	if (vision_face.race == 0)
-		race = "»ÆÖÖÈË";
+		race = "é»„ç§äºº";
 	else if (vision_face.race == 1)
-		race = "°×ÈË";
+		race = "ç™½äºº";
 	else if (vision_face.race == 2)
-		race = "ºÚÈË";
+		race = "é»‘äºº";
 	else
-		race = "Î´Öª";
+		race = "æœªçŸ¥";
 
 	string attractive;
 	if (vision_face.attractive == -1)
-		attractive = "Î´Öª";
+		attractive = "æœªçŸ¥";
 	else
-		attractive = "ÑÕÖµ" + int2str(vision_face.attractive);
+		attractive = "é¢œå€¼" + int2str(vision_face.attractive);
 
 	string expression;
 	if (vision_face.expression == 0)
-		expression = "¾ªÑÈ";
+		expression = "æƒŠè®¶";
 	else if (vision_face.expression == 1)
-		expression = "º¦ÅÂ";
+		expression = "å®³æ€•";
 	else if (vision_face.expression == 2)
-		expression = "·³Ôê";
+		expression = "çƒ¦èº";
 	else if (vision_face.expression == 3)
-		expression = "¿ªĞÄ";
+		expression = "å¼€å¿ƒ";
 	else if (vision_face.expression == 4)
-		expression = "ÉËĞÄ";
+		expression = "ä¼¤å¿ƒ";
 	else if (vision_face.expression == 5)
-		expression = "ÉúÆø";
+		expression = "ç”Ÿæ°”";
 	else if (vision_face.expression == 6)
-		expression = "µ­¶¨";
+		expression = "æ·¡å®š";
 	else
-		expression = "Î´Öª";
+		expression = "æœªçŸ¥";
 
 	string smile;
 	if (vision_face.smile == 0)
-		smile = "Ã»ÓĞÎ¢Ğ¦";
+		smile = "æ²¡æœ‰å¾®ç¬‘";
 	else if (vision_face.smile == 1)
-		smile = "Î¢Ğ¦";
+		smile = "å¾®ç¬‘";
 	else
-		smile = "Î´Öª";
+		smile = "æœªçŸ¥";
 
 	string mask;
 	if (vision_face.mask == 0)
-		mask = "ÎŞ¿ÚÕÖ";
+		mask = "æ— å£ç½©";
 	else if (vision_face.mask == 1)
-		mask = "´÷¿ÚÕÖ";
+		mask = "æˆ´å£ç½©";
 	else
-		mask = "Î´Öª";
+		mask = "æœªçŸ¥";
 
 	string age;
 	if (vision_face.age == -1)
-		age = "Î´Öª";
+		age = "æœªçŸ¥";
 	else
-		age = "ÄêÁä" + int2str(vision_face.age);
+		age = "å¹´é¾„" + int2str(vision_face.age);
 
 	PutAttributesText(img, int2str(id), vision_face.bbox, cv::Point(vision_face.bbox.x, vision_face.bbox.y), vision_face.bbox.width,
 		gender, age_group, glasses, race, attractive, expression, smile, mask, age, vision_face.tracking_path);
@@ -425,8 +425,8 @@ void DrawAttributesResult(cv::Mat& img, int id, vision::VisionFace& vision_face)
 
 void CameraTest(int camera_id, std::string model_name)
 {
-	vision::VisionFaceDetect* face_detect = vision::instantiateVisionFaceDetect(); // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊı£¬ÎŞĞèÔÙ´Î³õÊ¼»¯
-	vision::VisionFaceAlignment* face_align = vision::instantiateVisionFaceAlignment(); // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊı£¬ÎŞĞèÔÙ´Î³õÊ¼»¯
+	vision::VisionFaceDetect* face_detect = vision::instantiateVisionFaceDetect(); // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
+	vision::VisionFaceAlignment* face_align = vision::instantiateVisionFaceAlignment(); // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
 	VisionFaceAttributes *face_attributes = instantiateVisionFaceAttributes();
 	
 	face_attributes->InitV3(model_name);
@@ -442,7 +442,7 @@ void CameraTest(int camera_id, std::string model_name)
 			if (!img.empty())
 			{
 				// Perform Face Detect First
-				std::vector<vision::VisionFace> faces = face_detect->GetFaces(img); // ×¢Òâ£¬´ËÊ±VisionFace¶ÔÏóÖĞ³ıÁË¼ì²â¿òºÍÈËÁ³¹Ø¼üµã£¬ÆäËûÁ¿¶¼ÊÇÎŞĞ§µÄ
+				std::vector<vision::VisionFace> faces = face_detect->GetFaces(img); // æ³¨æ„ï¼Œæ­¤æ—¶VisionFaceå¯¹è±¡ä¸­é™¤äº†æ£€æµ‹æ¡†å’Œäººè„¸å…³é”®ç‚¹ï¼Œå…¶ä»–é‡éƒ½æ˜¯æ— æ•ˆçš„
 
 				for (int i=0; i<faces.size(); i++)
 				{

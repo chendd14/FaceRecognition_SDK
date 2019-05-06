@@ -21,7 +21,7 @@ vision::VisionFaceFeature *  face_feature   = nullptr;
 cv::Mat GetNormFace(std::string image_name) {
     cv::Mat                         norm_face;
     cv::Mat                         img_tmp   = cv::imread(image_name);
-    std::vector<vision::VisionFace> faces_tmp = face_detect->GetMaximumFace(img_tmp); // ×¢Òâ£¬´ËÊ±VisionFace¶ÔÏóÖĞ³ıÁË¼ì²â¿òºÍÈËÁ³¹Ø¼üµã£¬ÆäËûÁ¿¶¼ÊÇÎŞĞ§µÄ
+    std::vector<vision::VisionFace> faces_tmp = face_detect->GetMaximumFace(img_tmp); // æ³¨æ„ï¼Œæ­¤æ—¶VisionFaceå¯¹è±¡ä¸­é™¤äº†æ£€æµ‹æ¡†å’Œäººè„¸å…³é”®ç‚¹ï¼Œå…¶ä»–é‡éƒ½æ˜¯æ— æ•ˆçš„
     if (faces_tmp.size() < 1) {
         std::cout << "Failed to detect a face in " << image_name << ", exit." << std::endl;
         return norm_face;
@@ -40,9 +40,9 @@ int main(int argc, char **argv) {
 
         vision::SetLicenseFile(license_file);
 
-        face_detect    = vision::instantiateVisionFaceDetect();    // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊı£¬ÎŞĞèÔÙ´Î³õÊ¼»¯
-        face_alignment = vision::instantiateVisionFaceAlignment(); // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊı£¬ÎŞĞèÔÙ´Î³õÊ¼»¯
-        face_feature   = vision::instantiateVisionFaceFeature();   // Õë¶Ô²»Í¬µÄÊ¹ÓÃ³¡¾°£¬ĞèÒªÓÃÌØ¶¨µÄÄ£ĞÍ½øĞĞ³õÊ¼»¯
+        face_detect    = vision::instantiateVisionFaceDetect();    // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
+        face_alignment = vision::instantiateVisionFaceAlignment(); // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
+        face_feature   = vision::instantiateVisionFaceFeature();   // é’ˆå¯¹ä¸åŒçš„ä½¿ç”¨åœºæ™¯ï¼Œéœ€è¦ç”¨ç‰¹å®šçš„æ¨¡å‹è¿›è¡Œåˆå§‹åŒ–
 
         if (!face_feature->InitV3(model_name)) {
             std::cout << "Failed to init face feature, please check model path." << std::endl;
@@ -67,18 +67,18 @@ int main(int argc, char **argv) {
 
         std::vector<float> face_feature3;
         for (int i = 0; i < images.size(); i++) {
-            // Ò»°ãÇé¿öÏÂ£¬´¦ÀíµÄÍ¼Æ¬ÒÑ¾­ÊÇ¾­¹ı¼ì²âºÍ¹éÒ»»¯´¦Àí
+            // ä¸€èˆ¬æƒ…å†µä¸‹ï¼Œå¤„ç†çš„å›¾ç‰‡å·²ç»æ˜¯ç»è¿‡æ£€æµ‹å’Œå½’ä¸€åŒ–å¤„ç†
             cv::Mat norm_face_tmp = GetNormFace(test_image_root_folder + images.at(i));
             if (!norm_face_tmp.empty()) {
                 std::vector<float> feature_tmp = face_feature->GetFeature(norm_face_tmp);
-                // ½«ÈËÁ³ÌØÕ÷Ğ´ÈëDatabase
+                // å°†äººè„¸ç‰¹å¾å†™å…¥Database
                 if (face_compare->Add(feature_tmp) == -1) {
                     std::cout << "Failed to add feature for " << test_image_root_folder + images.at(i) << std::endl;
                 }
             }
         }
 
-        // ¹¹½¨ÓÃÓÚ²éÑ¯µÄfeature
+        // æ„å»ºç”¨äºæŸ¥è¯¢çš„feature
         cv::Mat            norm_face_tmp = GetNormFace(query_image_name);
         std::vector<float> tmp           = face_feature->GetFeature(norm_face_tmp);
 

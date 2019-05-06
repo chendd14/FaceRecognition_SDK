@@ -17,8 +17,8 @@ using namespace std;
 #endif
 
 void EfficiencyTest(std::string image_name) {
-    vision::VisionFaceDetect *   face_detect = vision::instantiateVisionFaceDetect();    // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊı£¬ÎŞĞèÔÙ´Î³õÊ¼»¯
-    vision::VisionFaceAlignment *face_align  = vision::instantiateVisionFaceAlignment(); // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊı£¬ÎŞĞèÔÙ´Î³õÊ¼»¯
+    vision::VisionFaceDetect *   face_detect = vision::instantiateVisionFaceDetect();    // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
+    vision::VisionFaceAlignment *face_align  = vision::instantiateVisionFaceAlignment(); // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
 
     cv::Mat test_img = cv::imread(image_name);
     double  start, stop, time;
@@ -26,7 +26,7 @@ void EfficiencyTest(std::string image_name) {
         if (!test_img.empty()) {
             cv::Mat img = test_img.clone();
             // Perform Face Detect First
-            std::vector<vision::VisionFace> faces = face_detect->GetFaces(img); // ×¢Òâ£¬´ËÊ±VisionFace¶ÔÏóÖĞ³ıÁË¼ì²â¿òºÍÈËÁ³¹Ø¼üµã£¬ÆäËûÁ¿¶¼ÊÇÎŞĞ§µÄ
+            std::vector<vision::VisionFace> faces = face_detect->GetFaces(img); // æ³¨æ„ï¼Œæ­¤æ—¶VisionFaceå¯¹è±¡ä¸­é™¤äº†æ£€æµ‹æ¡†å’Œäººè„¸å…³é”®ç‚¹ï¼Œå…¶ä»–é‡éƒ½æ˜¯æ— æ•ˆçš„
             for (size_t i = 0; i < faces.size(); i++) {
                 start                            = (double)cvGetTickCount();
                 std::vector<cv::Point2f> key_pts = face_align->GetKeyPoints(img, faces[i].bbox);
@@ -52,8 +52,8 @@ void EfficiencyTest(std::string image_name) {
 }
 
 void CameraTest(int camera_id) {
-    vision::VisionFaceDetect *   face_detect = vision::instantiateVisionFaceDetect();    // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊı£¬ÎŞĞèÔÙ´Î³õÊ¼»¯
-    vision::VisionFaceAlignment *face_align  = vision::instantiateVisionFaceAlignment(); // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊı£¬ÎŞĞèÔÙ´Î³õÊ¼»¯
+    vision::VisionFaceDetect *   face_detect = vision::instantiateVisionFaceDetect();    // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
+    vision::VisionFaceAlignment *face_align  = vision::instantiateVisionFaceAlignment(); // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
 
     cv::VideoCapture cap(camera_id);
     cv::Mat          img;
@@ -63,7 +63,7 @@ void CameraTest(int camera_id) {
             cap >> img;
             if (!img.empty()) {
                 // Perform Face Detect First
-                std::vector<vision::VisionFace> faces = face_detect->GetFaces(img); // ×¢Òâ£¬´ËÊ±VisionFace¶ÔÏóÖĞ³ıÁË¼ì²â¿òºÍÈËÁ³¹Ø¼üµã£¬ÆäËûÁ¿¶¼ÊÇÎŞĞ§µÄ
+                std::vector<vision::VisionFace> faces = face_detect->GetFaces(img); // æ³¨æ„ï¼Œæ­¤æ—¶VisionFaceå¯¹è±¡ä¸­é™¤äº†æ£€æµ‹æ¡†å’Œäººè„¸å…³é”®ç‚¹ï¼Œå…¶ä»–é‡éƒ½æ˜¯æ— æ•ˆçš„
 
                 for (size_t i = 0; i < faces.size(); i++) {
                     start                            = (double)cvGetTickCount();

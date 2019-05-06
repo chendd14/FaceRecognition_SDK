@@ -16,9 +16,9 @@ int main(int argc, char **argv) {
         std::string image1_name       = std::string(argv[2]);
         std::string image2_name       = std::string(argv[3]);
 
-        vision::VisionFaceDetect *   face_detect    = vision::instantiateVisionFaceDetect();    // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊý£¬ÎÞÐèÔÙ´Î³õÊ¼»¯
-        vision::VisionFaceAlignment *face_alignment = vision::instantiateVisionFaceAlignment(); // °üº¬Ä¬ÈÏ³õÊ¼»¯²ÎÊý£¬ÎÞÐèÔÙ´Î³õÊ¼»¯
-        vision::VisionFaceFeature *  face_feature   = vision::instantiateVisionFaceFeature();   // Õë¶Ô²»Í¬µÄÊ¹ÓÃ³¡¾°£¬ÐèÒªÓÃÌØ¶¨µÄÄ£ÐÍ½øÐÐ³õÊ¼»¯
+        vision::VisionFaceDetect *   face_detect    = vision::instantiateVisionFaceDetect();    // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
+        vision::VisionFaceAlignment *face_alignment = vision::instantiateVisionFaceAlignment(); // åŒ…å«é»˜è®¤åˆå§‹åŒ–å‚æ•°ï¼Œæ— éœ€å†æ¬¡åˆå§‹åŒ–
+        vision::VisionFaceFeature *  face_feature   = vision::instantiateVisionFaceFeature();   // é’ˆå¯¹ä¸åŒçš„ä½¿ç”¨åœºæ™¯ï¼Œéœ€è¦ç”¨ç‰¹å®šçš„æ¨¡åž‹è¿›è¡Œåˆå§‹åŒ–
         face_feature->InitV3(recognition_model);
 
         cv::Mat img1 = cv::imread(image1_name);
