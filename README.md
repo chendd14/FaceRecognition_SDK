@@ -18,7 +18,7 @@ namespace vision {
 		/* 初始化，输入参数文件param_path和所要使用的GPU编号device_id */
 		virtual bool Init(std::string param_path = "models/face_detect_cascade.json", int device_id = 0) = 0;
 
-		/* 输入一张图像img，获取人脸信息（包括人脸框和关键点）；在输入视频的情况下，将is_video_stream设置为true，能够极大提升检测速度 */
+		/* 输入一张图像img，获取人脸信息；在输入视频的情况下，将is_video_stream设置为true，能够极大提升检测速度 */
 		virtual std::vector<VisionFace> GetFaces(const cv::Mat& img, bool is_video_stream = false) = 0;
 
 		/* 输入一张图像img，返回所有的人脸框以及对应的人脸关键点（引用形式返回） */
