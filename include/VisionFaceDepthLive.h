@@ -42,10 +42,19 @@ public:
     /**
      * @brief GetLiveState 获取深度活体状态
      * @param depth 深度信息一通道
+     * @param face_rect 深度图上人脸所在的位置
      * @param key_pts 红外图像上人脸关键点位置（对应深度图上人脸关键点位置）
      * @return 详见DEPTH_LIVE_STATE_CODE的说明
      */
     virtual DEPTH_LIVE_STATE_CODE GetLiveState(const cv::Mat &depth, const cv::Rect &face_rect, const std::vector<cv::Point2f> &key_pts) = 0;
+
+	/**
+     * @brief GetLiveState 获取深度活体状态
+     * @param depth 深度信息一通道
+     * @param face_rect 深度图上人脸所在的位置
+     * @return 详见DEPTH_LIVE_STATE_CODE的说明
+     */
+    virtual DEPTH_LIVE_STATE_CODE GetLiveState(const cv::Mat &depth, const cv::Rect &face_rect) = 0;
 
     /**
      * @brief SetFaceDistanceMinimum 设置最近活体人脸检测距离
