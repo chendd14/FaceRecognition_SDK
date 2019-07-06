@@ -51,6 +51,12 @@ public:
      */
     virtual std::vector<VisionFace> GetTrackInfo() = 0;
 
+	/**
+	 *@brief Clear 清空跟踪信息
+	 *@return
+	*/
+    virtual void Clear() = 0;
+
     /**
      * @brief SetMinFaceSize 设置最小跟踪人脸
      * @param size 最小跟踪人脸（像素），默认40
